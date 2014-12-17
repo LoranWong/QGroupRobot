@@ -18,12 +18,21 @@ import java.awt.TextArea;
 
 import javax.swing.JTextArea;
 
+import com.jackwong025.qgrouprobot.Controller.DAO;
 import com.jackwong025.qgrouprobot.Controller.RobotController;
+import com.jackwong025.qgrouprobot.Model.User;
 
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Properties;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame {
 
@@ -54,6 +63,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/javax/swing/plaf/metal/icons/ocean/computer.gif")));
 
 		setResizable(false);
 		setTitle("QGroupRobot -By JackWong ");
@@ -88,7 +98,7 @@ public class MainFrame extends JFrame {
 		JButton btnStart = new JButton("start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showMessage("登陆中...");
+				showMessage("登录中...");
 				robotController = new RobotController(MainFrame.this, qq_number.getText(), qq_password.getText(),qgroup_number.getText());
 				qq_password.setText("");
 			}
@@ -112,11 +122,10 @@ public class MainFrame extends JFrame {
 		contentPane.add(lblQq);
 		
 		qgroup_number = new JTextField();
-		qgroup_number.setText("192866846");
+		qgroup_number.setText("206372158");
 		qgroup_number.setColumns(10);
 		qgroup_number.setBounds(88, 44, 99, 24);
 		contentPane.add(qgroup_number);
-
 	}
 	
 	public void showMessage(String msg) {
