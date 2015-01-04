@@ -25,6 +25,7 @@ import iqq.im.bean.QQStatus;
 import iqq.im.bean.QQUser;
 import iqq.im.bean.content.CFaceItem;
 import iqq.im.bean.content.ContentItem;
+import iqq.im.bean.content.FaceItem;
 import iqq.im.bean.content.OffPicItem;
 import iqq.im.bean.content.TextItem;
 import iqq.im.core.QQConstants;
@@ -124,7 +125,7 @@ public class RobotController {
             String result=getResultByMsg(textS,uin);
 
             
-            if (!result.isEmpty()) {
+            if (!result.isEmpty() && !result.endsWith(Constant.MEIZI)) {
             	//新建消息
                 final QQMsg myMessage = new QQMsg();
                 //设置类型
@@ -145,30 +146,41 @@ public class RobotController {
                     }
                 });
             }
-//			else if (result.endsWith(Constant.MEIZI)) {
-//				//新建消息
-//                final QQMsg myMessage = new QQMsg();
-//                //设置类型
-//                myMessage.setType(message.getType());
-//                if (message.getType() == QQMsg.Type.GROUP_MSG) {
-//                    myMessage.setGroup(message.getGroup());
-//                }
-//                myMessage.setTo(message.getFrom());
-//                //设置内容
+			else if (result.endsWith(Constant.MEIZI)) {
+				//新建消息
+                final QQMsg myMessage = new QQMsg();
+                //设置类型
+                myMessage.setType(message.getType());
+                if (message.getType() == QQMsg.Type.GROUP_MSG) {
+                    myMessage.setGroup(message.getGroup());
+                }
+                myMessage.setTo(message.getFrom());
+                
+                //设置内容
 //                CFaceItem cFaceItem = new CFaceItem();
 //                cFaceItem.setFileName("test.jpg");
-//                myMessage.addContentItem(cFaceItem);
-//                
-//                //发送消息
-//                this.client.sendMsg(myMessage, new QQActionListener() {
-//                    @Override
-//                    public void onActionEvent(QQActionEvent event) {
-//                    	if(event.getType()==QQActionEvent.Type.EVT_OK){
-//                    		frame.showMessage("已发送-->【老婆图】");
-//                    	}
-//                    }
-//                });
-//			}
+
+                FaceItem faceItemCP = new FaceItem(116);
+                
+                OffPicItem offPicItem = new OffPicItem();
+                offPicItem.setFileName("image.jpg");
+                offPicItem.setFilePath("E:/Coding/WorkSpace/Eclipse_WorkSpace/QGroupRobot/");
+                offPicItem.setFileSize((int) new File("image.jpg").length());
+                
+                myMessage.addContentItem(offPicItem);
+                //myMessage.addContentItem(faceItemCP);
+                //myMessage.addContentItem(faceItemCP);
+                
+                //发送消息
+                this.client.sendMsg(myMessage, new QQActionListener() {
+                    @Override
+                    public void onActionEvent(QQActionEvent event) {
+                    	if(event.getType()==QQActionEvent.Type.EVT_OK){
+                    		frame.showMessage("已发送-->【老婆图】");
+                    	}
+                    }
+                });
+			}
         }
     }
 
@@ -238,9 +250,9 @@ public class RobotController {
     		case "注册":
     			
     			break;
-//    		case "老婆":
-//    			result = Constant.MEIZI;
-//    			break;
+    		case "老婆":
+    			result = Constant.MEIZI;
+    			break;
     		default:
     			//获得小黄鸡结果
                 result = Xiaohuangji.chat(msg);

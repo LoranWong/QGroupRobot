@@ -122,7 +122,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(lblQq);
 		
 		qgroup_number = new JTextField();
-		qgroup_number.setText("206372158");
+		qgroup_number.setText("192866846");
 		qgroup_number.setColumns(10);
 		qgroup_number.setBounds(88, 44, 99, 24);
 		contentPane.add(qgroup_number);
